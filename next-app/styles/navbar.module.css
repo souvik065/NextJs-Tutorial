@@ -1,0 +1,25 @@
+.container{
+    width: 100%;
+    height: 30px;
+    margin: 0;
+    background: rgba(0,0,0,0.9);
+    color: whitesmoke;
+}
+
+.container ul{
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.container ul li{
+    list-style: none;
+
+    float: left;
+    font-size: 14px;
+}
+
+.container ul li:hover{
+    color:black;
+
+}
