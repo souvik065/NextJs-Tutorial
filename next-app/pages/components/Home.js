@@ -2,7 +2,7 @@ import Layout from "../layout/layout";
 
 export default function Home({ posts }) {
   return (
-    <Layout>
+    <Layout home>
       <h1>{posts.title}</h1>
       <p>{posts.description}</p>
     </Layout>
