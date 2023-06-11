@@ -1,10 +1,14 @@
 import { getAllPost } from "../lib/helper";
-//import { getSataticProps, getStaticPaths } from "next";
 import { useRouter } from "next/router";
 
 export default function Post({ post }) {
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id);
+
   return (
     <article>
+      <button onClick={() => router.push("user")}>post</button>
       {post.map((p) => (
         <div key={p.id}>
           <h1>{p.id}</h1>
