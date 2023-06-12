@@ -1,4 +1,4 @@
-import useSWR from "swr";
+import useSWR, { SWRConfig } from "swr";
 
 const fetcher = async (url) => {
   const res = await fetch(url);
@@ -11,36 +11,20 @@ const fetcher = async (url) => {
   }
 };
 
-export default function Users() {
-  const { user, isLoading, isError } = getData();
-
-  if (isError) return <div>Error Fetching data</div>;
-
-  if (!isLoading) return <div>Loading...</div>;
-
-  return (
-    <article>
-      {console.log("Users Props:", user)}
-      {user.map((u) => {
-        return (
-          <div key={u.id}>
-            <p></p>
-            <h1>{u.name}</h1>
-          </div>
-        );
-      })}
-    </article>
-  );
+export default function Users({ fallback }) {
+  return <SWRConfig value={{ fallback }}>{getData()}</SWRConfig>;
 }
 
 export async function getStaticProps() {
   try {
-    const res = await fetch("http://localhost:3000/api/users");
+    const res = await fetch("http://localhost:3000/api/user");
     const user = await res.json();
 
     return {
       props: {
-        user: user,
+        fallback: {
+          "/api/users": users,
+        },
       },
     };
   } catch (error) {
@@ -55,21 +39,31 @@ export async function getStaticProps() {
 }
 
 function getData() {
-  const { data, error } = useSWR("http://localhost:3000/api/users", fetcher, {
-    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
-      if (error.status === 404) return;
+  const { data, error } = useSWR("http://localhost:3000/api/users", fetcher);
 
-      if (key === "/api/user") return;
+  if (error) return <div>Error Fetching data</div>;
 
-      if (retryCount >= 10) return;
+  if (!data) return <div>Loading...</div>;
 
-      setTimeout(() => revalidate({ retryCount }), 5000);
-    },
-  });
-
-  return {
-    user: data,
-    isLoading: !error && !data,
-    isError: error,
-  };
+  return (
+    <article>
+      {console.log("Users Props:", data)}
+      {data.map((u) => {
+        return (
+          <div key={u.id}>
+            <p></p>
+            <h1>{u.name}</h1>
+          </div>
+        );
+      })}
+    </article>
+  );
 }
+
+<SWRConfig
+  value={{
+    refreshInterval: 3000,
+    fetcher: (resource, init) =>
+      fetch(resource, init).then((res) => res.json()),
+  }}
+></SWRConfig>;
