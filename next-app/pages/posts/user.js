@@ -2,17 +2,17 @@ import useSWR from "swr";
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json());
 
-export default function Users({ users }) {
-  const { data, error } = useSWR("http://localhost:3000/api/user", fetcher);
+export default function Users() {
+  const { user, isLoading, isError } = getData();
 
-  if (error) return <div>Error Fetching data</div>;
+  if (isError) return <div>Error Fetching data</div>;
 
-  if (!data) return <div>Loading...</div>;
+  if (!isLoading) return <div>Loading...</div>;
 
   return (
     <article>
-      {console.log("Users Props:", users)}
-      {users.map((u) => {
+      {console.log("Users Props:", user)}
+      {user.map((u) => {
         return (
           <div key={u.id}>
             <p></p>
@@ -26,12 +26,12 @@ export default function Users({ users }) {
 
 export async function getStaticProps() {
   try {
-    const res = await fetch("http://localhost:3000/api/user");
-    const data = await res.json();
+    const res = await fetch("http://localhost:3000/api/users");
+    const user = await res.json();
 
     return {
       props: {
-        users: data,
+        user: user,
       },
     };
   } catch (error) {
@@ -43,4 +43,14 @@ export async function getStaticProps() {
       },
     };
   }
+}
+
+function getData() {
+  const { data, error } = useSWR("http://localhost:3000/api/users", fetcher);
+
+  return {
+    user: data,
+    isLoading: !error && !data,
+    isError: error,
+  };
 }
