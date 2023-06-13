@@ -1,3 +1,5 @@
+import { ImFacebook, ImTwitter, ImGithub } from "react-icons/im";
+
 function header() {
   return (
     <header className="bg-gray-50 text-black">
@@ -6,13 +8,19 @@ function header() {
           <input type="text" className="input-text" placeholder="Search..." />
         </div>
         <div className="shrink w-80 sm:order-2">
-          <a>Design</a>
+          <a className="font-bold uppercase text-3xl">Design</a>
         </div>
-        <div className="w-96 order-3 flex ">
-          <div className="flex gap-6">
-            <a>Facebook</a>
-            <a>Twitter</a>
-            <a>Youtube</a>
+        <div className="w-96 order-3 flex justify-center">
+          <div className="flex gap-6 ">
+            <a>
+              <ImFacebook color="#888888" />{" "}
+            </a>
+            <a>
+              <ImTwitter color="#888888" />
+            </a>
+            <a>
+              <ImGithub color="#888888" />
+            </a>
           </div>
         </div>
       </div>
