@@ -1,11 +1,10 @@
-import Image from "next/image";
+import Format from "../layout/format";
 import Head from "next/head";
-import Header from "../components/header";
 
 export default function Home() {
   return (
-    <div>
-      <Header></Header>
-    </div>
+    <Format>
+      <main>M</main>
+    </Format>
   );
 }

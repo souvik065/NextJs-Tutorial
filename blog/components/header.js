@@ -1,4 +1,5 @@
 import { ImFacebook, ImTwitter, ImGithub } from "react-icons/im";
+import Link from "next/link";
 
 function header() {
   return (
@@ -12,15 +13,21 @@ function header() {
         </div>
         <div className="w-96 order-3 flex justify-center">
           <div className="flex gap-6 ">
-            <a>
-              <ImFacebook color="#888888" />{" "}
-            </a>
-            <a>
-              <ImTwitter color="#888888" />
-            </a>
-            <a>
-              <ImGithub color="#888888" />
-            </a>
+            <Link href={"/"} legacyBehavior>
+              <a>
+                <ImFacebook color="#888888" />
+              </a>
+            </Link>
+            <Link href={"/"} legacyBehavior>
+              <a>
+                <ImTwitter color="#888888" />
+              </a>
+            </Link>
+            <Link href={"/"} legacyBehavior>
+              <a>
+                <ImGithub color="#888888" />
+              </a>
+            </Link>
           </div>
         </div>
       </div>
