@@ -1,10 +1,11 @@
 import Format from "../layout/format";
-import Head from "next/head";
+//Components
+import Section1 from "../components/section1";
 
 export default function Home() {
   return (
     <Format>
-      <main>M</main>
+      <Section1></Section1>
     </Format>
   );
 }
