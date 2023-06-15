@@ -1,18 +1,39 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Author from "./_child/auhor";
+// Import Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import SwiperCore, { Autoplay } from "swiper";
+// Import Swiper styles
+import "swiper/css";
 
 export default function section1() {
+  SwiperCore.use(Autoplay);
+
   const bg = {
     background: "url('/images/banner.png') no-repeat",
     backgroundPosition: "right",
   };
-
   return (
     <section className="py-16" style={bg}>
       <div className="container mx-auto md:px-20">
         <h1 className="font-bold text-4xl pb-12 text-center">Trending</h1>
-        {Slide()}
+        <Swiper
+          slidesPerView={1}
+          loop={true}
+          autoplay={{
+            delay: 2000,
+          }}
+        >
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          <SwiperSlide>{Slide()}</SwiperSlide>
+          ...
+        </Swiper>
       </div>
     </section>
   );
