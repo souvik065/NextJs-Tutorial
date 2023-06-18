@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import Author from "./_child/auhor";
+import Author from "./_child/author";
 
 export default function section2() {
   return (
