@@ -45,7 +45,12 @@ function Slide() {
       <div className="image">
         <Link href={"/"} legacyBehavior>
           <a>
-            <Image src={"/images/img1.jpg"} width={600} height={600} />
+            <Image
+              alt="A descriptive text about the image"
+              src={"/images/img1.jpg"}
+              width={600}
+              height={600}
+            />
           </a>
         </Link>
       </div>

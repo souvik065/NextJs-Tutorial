@@ -28,6 +28,7 @@ function Post() {
           <a>
             <Image
               src={"/images/img1.jpg"}
+              alt="A descriptive text about the image"
               className="rounded"
               width={500}
               height={350}

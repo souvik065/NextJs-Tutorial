@@ -25,6 +25,7 @@ function Post() {
         <Link href={"/"} legacyBehavior>
           <a>
             <Image
+              alt="A descriptive text about the image"
               src={"/images/img1.jpg"}
               className="rounded"
               width={300}

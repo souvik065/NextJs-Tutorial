@@ -5,6 +5,7 @@ export default function auhor() {
   return (
     <div className="author flex py-5">
       <Image
+        alt="A descriptive text about the image"
         src={"/images/author/author1.jpg"}
         width={60}
         height={60}
