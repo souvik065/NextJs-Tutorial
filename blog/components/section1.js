@@ -2,6 +2,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import Author from "./_child/author";
+import fetcher from "../lib/fetcher";
+import Spinner from "./_child/spinner";
+import Error from "./_child/error";
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Autoplay } from "swiper";
@@ -10,6 +13,10 @@ import "swiper/css";
 
 export default function section1() {
   SwiperCore.use(Autoplay);
+
+  const { data, isLoading, isError } = fetcher("api/trending");
+  if (isLoading) return <Spinner></Spinner>;
+  if (isError) return <Error></Error>;
 
   const bg = {
     background: "url('/images/banner.png') no-repeat",
@@ -26,20 +33,20 @@ export default function section1() {
             delay: 2000,
           }}
         >
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          <SwiperSlide>{Slide()}</SwiperSlide>
-          ...
+          {data.map((value, index) => (
+            <SwiperSlide key={index}>
+              <Slide data={value}></Slide>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>
   );
 }
 
-function Slide() {
+function Slide({ data }) {
+  const { id, category, img, published, author, description, title } = data;
+
   return (
     <div className="grid md:grid-cols-2 gap-10">
       <div className="image">
@@ -47,7 +54,7 @@ function Slide() {
           <a>
             <Image
               alt="A descriptive text about the image"
-              src={"/images/img1.jpg"}
+              src={img || "/"}
               width={600}
               height={600}
             />
@@ -57,26 +64,25 @@ function Slide() {
       <div className="info flex justify-center flex-col">
         <div className="cat">
           <Link href={"/"} legacyBehavior>
-            <a className="text-orange-600 hover:text-orange-800">Bussiness</a>
+            <a className="text-orange-600 hover:text-orange-800">
+              {category || "Unknown"}
+            </a>
           </Link>
           <Link href={"/"} legacyBehavior>
-            <a className="text-gray-800 hover:text-gray-800">-Jully 3, 2023</a>
+            <a className="text-gray-800 hover:text-gray-800">
+              -{published || "Unknown"}
+            </a>
           </Link>
         </div>
         <div className="title">
           <Link href={"/"} legacyBehavior>
             <a className="text-3xl md:text-6xl font-bold text-gray-800 hover:text-gray-600">
-              Your most unhappy customers are your fretest soure of learning
+              {title || "Unknown"}
             </a>
           </Link>
         </div>
-        <p className="text-gray-500 py-3">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos unde sed
-          voluptas possimus? Debitis obcaecati, sunt neque sint magni cumque
-          pariatur laudantium, ratione laboriosam possimus vel ipsa, quis iusto
-          dignissimos quod minima doloremque quidem. Ducimus, culpa perferendis
-        </p>
-        <Author>Author</Author>
+        <p className="text-gray-500 py-3">{description || "description"}</p>
+        {author ? <Author></Author> : <></>}
       </div>
     </div>
   );

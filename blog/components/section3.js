@@ -2,32 +2,40 @@
 import Image from "next/image";
 import Link from "next/link";
 import Author from "./_child/author";
+import fetcher from "../lib/fetcher";
+import Spinner from "./_child/spinner";
+import Error from "./_child/error";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function section3() {
+  const { data, isLoading, isError } = fetcher("api/popular");
+  if (isLoading) return <Spinner></Spinner>;
+  if (isError) return <Error></Error>;
+
   return (
     <section className="conatiner mx-auto md:px-20 py-16">
       <h1 className="font-bold text-4xl py-12 text-center">Most Popular</h1>
       <Swiper slidesPerView={2}>
-        <SwiperSlide>{Post()}</SwiperSlide>
-        <SwiperSlide>{Post()}</SwiperSlide>
-        <SwiperSlide>{Post()}</SwiperSlide>
-        <SwiperSlide>{Post()}</SwiperSlide>
-        <SwiperSlide>{Post()}</SwiperSlide>
-        <SwiperSlide>{Post()}</SwiperSlide>
+        {data.map((value, index) => (
+          <SwiperSlide key={index}>
+            <Post data={value}></Post>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </section>
   );
 }
 
-function Post() {
+function Post({ data }) {
+  const { id, category, img, published, author, description, title } = data;
+
   return (
     <div className="grid">
       <div className="images">
         <Link href={"/"} legacyBehavior>
           <a>
             <Image
-              src={"/images/img1.jpg"}
+              src={img || "/"}
               alt="A descriptive text about the image"
               className="rounded"
               width={500}
@@ -38,26 +46,25 @@ function Post() {
       </div>
       <div className="info flex justify-center flex-col py-4">
         <Link href={"/"} legacyBehavior>
-          <a className="text-orange-600 hover:text-orange-800">Bussiness</a>
+          <a className="text-orange-600 hover:text-orange-800">
+            {category || "Unknown"}
+          </a>
         </Link>
         <Link href={"/"} legacyBehavior>
-          <a className="text-gray-800 hover:text-gray-800">-Jully 3, 2023</a>
+          <a className="text-gray-800 hover:text-gray-800">
+            -{published || "Unknown"}
+          </a>
         </Link>
       </div>
       <div className="title">
         <Link href={"/"} legacyBehavior>
           <a className="text-xl  font-bold text-gray-800 hover:text-gray-600">
-            Your most unhappy customers are your fretest soure of learning
+            {title || "Unknown"}
           </a>
         </Link>
       </div>
-      <p className="text-gray-500 py-3">
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos unde sed
-        voluptas possimus? Debitis obcaecati, sunt neque sint magni cumque
-        pariatur laudantium, ratione laboriosam possimus vel ipsa, quis iusto
-        dignissimos quod minima doloremque quidem. Ducimus, culpa perferendis
-      </p>
-      <Author>Author</Author>
+      <p className="text-gray-500 py-3">{description || "description"}</p>
+      {author ? <Author></Author> : <></>}
     </div>
   );
 }
