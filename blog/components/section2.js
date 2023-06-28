@@ -69,7 +69,7 @@ function Post({ data }) {
         pariatur laudantium, ratione laboriosam possimus vel ipsa, quis iusto
         dignissimos quod minima doloremque quidem. Ducimus, culpa perferendis
       </p>
-      {author ? <Author></Author> : <></>}
+      {author ? <Author {...author}></Author> : <></>}
     </div>
   );
 }
