@@ -119,7 +119,7 @@ export default {
             `,
       published: "Jun 3,  2022",
       author: {
-        name: "Flying High",
+        name: "Souvik Bhattacharya",
         img: "/images/author/author1.jpg",
         designation: "CEO and Founder",
       },
