@@ -1,5 +1,7 @@
 import Head from "next/head";
 import { BiUserPlus } from "react-icons/bi";
+import Form from "../components/form";
+import Table from "../components/table";
 
 export default function Home() {
   return (
@@ -26,8 +28,14 @@ export default function Home() {
           </div>
 
           {/* collapsable form */}
+          <div className="container mx-auto py-5">
+            <Form></Form>
+          </div>
 
           {/* table */}
+          <div className="container mx-auto">
+            <Table></Table>
+          </div>
         </div>
       </main>
     </section>
