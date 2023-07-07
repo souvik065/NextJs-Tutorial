@@ -1,5 +1,5 @@
 import connectMongo from "../../../database/conn";
-import { getUsers, postUser } from "../../../database/controller";
+import { getUsers, postUser, putUser } from "../../../database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() =>
@@ -18,7 +18,7 @@ export default function handler(req, res) {
       break;
 
     case "PUT":
-      res.status(200).json({ method, name: "PUT Request" });
+      putUser(req, res);
       break;
 
     case "DELETE":
