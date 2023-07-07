@@ -26,7 +26,7 @@ export async function postUser(req, res) {
   }
 }
 
-//PUT http://localhost:3000/api/users
+//PUT http://localhost:3000/api/users/1
 export async function putUser(req, res) {
   try {
     const { userId } = req.query;
@@ -39,5 +39,21 @@ export async function putUser(req, res) {
     res.status(404).json({ erro: "User Not Prodvided" });
   } catch (error) {
     return res.status(404).json({ error });
+  }
+}
+
+//DELETE http://localhost:3000/api/users/1
+export async function deleteUser(req, res) {
+  try {
+    const { userId } = req.query;
+
+    if (userId) {
+      const user = await Users.findByIdAndDelete(userId);
+      return res.status(200).json({ deleted: userId });
+    }
+
+    res.status(404).json({ erro: "User Not Selected...!" });
+  } catch (error) {
+    res.status(404).json({ error: "Error While Deleting the User...!" });
   }
 }

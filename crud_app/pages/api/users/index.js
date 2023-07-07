@@ -1,5 +1,10 @@
 import connectMongo from "../../../database/conn";
-import { getUsers, postUser, putUser } from "../../../database/controller";
+import {
+  getUsers,
+  postUser,
+  putUser,
+  deleteUser,
+} from "../../../database/controller";
 
 export default function handler(req, res) {
   connectMongo().catch(() =>
@@ -22,7 +27,7 @@ export default function handler(req, res) {
       break;
 
     case "DELETE":
-      res.status(200).json({ method, name: "DELETE Request" });
+      deleteUser(req, res);
       break;
 
     default:
