@@ -1,7 +1,11 @@
+"use client";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import { Providers } from "../components/Providers/Providers.client";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { store } from "../redux/store";
+import { Provider } from "react-redux";
 
+const queryClient = new QueryClient();
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -17,7 +21,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Providers>{children}</Providers>
+        <QueryClientProvider client={queryClient}>
+          <Provider store={store}>{children}</Provider>
+        </QueryClientProvider>
       </body>
     </html>
   );

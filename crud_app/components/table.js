@@ -2,6 +2,8 @@ import { BiEdit, BiTrashAlt } from "react-icons/bi";
 
 import { getUsers } from "../lib/helper";
 import { useQuery } from "react-query";
+import { useSelector, useDispatch } from "react-redux";
+import { toggleChangeAction } from "@/redux/reducer";
 
 export default function Table() {
   const { isLoading, isError, data, error } = useQuery("users", getUsers);
@@ -41,6 +43,13 @@ export default function Table() {
 }
 
 function Tr(props) {
+  const visible = useSelector((state) => state.app.client.toggleForm);
+  const dispatch = useDispatch();
+  const onUpdate = () => {
+    dispatch(toggleChangeAction());
+    console.log(visible);
+  };
+
   const { id, name, avatar, email, salary, date, status } = props;
 
   return (
@@ -77,7 +86,11 @@ function Tr(props) {
       </td>
       <td className="px-16 py-2 flex justify-around gap-5">
         <button className="cursor">
-          <BiEdit size={25} color={"rgb(34,197,94)"}></BiEdit>
+          <BiEdit
+            size={25}
+            onClick={onUpdate}
+            color={"rgb(34,197,94)"}
+          ></BiEdit>
         </button>
         <button className="cursor">
           <BiTrashAlt size={25} color={"rgb(244,63,94)"}></BiTrashAlt>
